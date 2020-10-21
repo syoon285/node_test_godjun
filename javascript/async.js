@@ -18,7 +18,12 @@ const fs = require("fs");
  * readFile 실패시에 "fail" 문자열 반환
  */
 const readFilePromise = (...args) => {
-  return;
-};
+  return new Promise ((resolve, reject) => {
+    fs.readFile(...args, (err, data) => {
+      if (err) reject ('fail')
+      resolve (data);
+    }) 
+  })
+}
 
 module.exports = { readFilePromise };

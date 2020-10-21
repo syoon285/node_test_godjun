@@ -11,7 +11,12 @@ const db = require("./db");
  * @param {integer} limit
  */
 const getUsersWithLimit = (limit = null) => {
-  return db.query(``);
+  
+  return db.query(`
+    SELECT * 
+    FROM users
+    ${limit ? `LIMIT ${limit}` : ''};
+  `);
 };
 
 /**
@@ -24,7 +29,7 @@ const getUsersWithLimit = (limit = null) => {
  *
  */
 const updateJobAreaOfUser = (name, job_area) => {
-  return db.query(``);
+  return db.query(`UPDATE users SET job_area="${job_area}" WHERE name="${name}";`);
 };
 
 /**
@@ -35,7 +40,11 @@ const updateJobAreaOfUser = (name, job_area) => {
  * @param {string} name
  */
 const deleteUser = (name) => {
-  return db.query(``);
+  return db.query(`
+    DELETE
+    FROM users
+    WHERE name='${name}';
+  `);
 };
 
 /**
@@ -48,7 +57,13 @@ const deleteUser = (name) => {
  * @param {string} keyword
  */
 const searchUsers = (keyword) => {
-  return db.query(``);
+  if (!keyword) return [];
+
+  return db.query(`
+    SELECT *
+    FROM users
+    WHERE users.name LIKE '%${keyword}%';
+  `);
 };
 
 module.exports = {
